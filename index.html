@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141414">
+<meta name="robots" content="noindex, nofollow">
+<title>Arushi — The Birthday Special</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23000%27/%3E%3Ctext x=%2716%27 y=%2724%27 font-size=%2724%27 font-family=%27Impact%27 text-anchor=%27middle%27 fill=%27%23e50914%27%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="fonts/BebasNeue-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- 1 · Opening: black screen, then the AJM ident -->
+<section id="boot" class="stage active" aria-label="Start"></section>
+<button id="enter" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+  <span class="lbl-full">Full screen</span><span class="lbl-sound">Click for sound</span>
+</button>
+<span id="ready" aria-live="polite"></span>
+
+<section id="ident" class="stage" aria-hidden="true">
+  <video id="ident-video" src="media/intro.mp4" playsinline preload="auto"></video>
+</section>
+
+<!-- 2 · Who's watching? -->
+<section id="profiles" class="stage" aria-label="Choose profile">
+  <h1>Who's watching?</h1>
+  <ul>
+    <li>
+      <button id="profile-btn" type="button">
+        <span class="avatar"><img id="profile-img" alt=""></span>
+        <span class="pname" id="profile-name"></span>
+      </button>
+    </li>
+  </ul>
+</section>
+
+<!-- 3 · Browse -->
+<section id="browse" class="stage" aria-label="Home">
+  <header id="topbar">
+    <a class="wordmark" href="#" id="home-link" aria-label="Home">NETFLIX</a>
+    <nav>
+      <a class="current">Home</a><a>TV Shows</a><a>Movies</a><a>New &amp; Popular</a><a>My List</a><a>Browse by Languages</a>
+    </nav>
+    <div class="tools">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#fff" stroke-width="1.8"/><path d="M15.5 15.5L21 21" stroke="#fff" stroke-width="1.8"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v4.5L4 17h16l-2-3.500V9a6 6 0 0 0-6-6zm-2 16a2 2 0 0 0 4 0" fill="none" stroke="#fff" stroke-width="1.8"/></svg>
+      <img id="mini-avatar" alt=""><span class="caret"></span>
+    </div>
+  </header>
+
+  <div id="hero">
+    <div class="hero-img" id="hero-img"></div>
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <div class="badge"><span class="b-mark">AJM</span><span class="b-text">SPECIAL</span></div>
+      <h2 id="hero-title"></h2>
+      <p class="hero-sub" id="hero-sub"></p>
+      <p class="hero-detail" id="hero-detail"></p>
+      <p class="hero-syn" id="hero-syn"></p>
+      <div class="hero-actions">
+        <button id="play" class="btn btn-play" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v17L20.500 12z"/></svg>Play</button>
+        <button id="more" class="btn btn-more" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.500" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v6M12 7.200v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>More Info</button>
+      </div>
+    </div>
+    <div class="maturity">24</div>
+  </div>
+
+  <main id="rows"></main>
+  <footer>Made with love for Arushi · 24 on 20 November</footer>
+</section>
+
+<!-- More Info -->
+<div id="info" class="overlay" role="dialog" aria-modal="true" aria-label="About this special">
+  <div class="info-card">
+    <button class="x" data-close type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#fff" stroke-width="2"/></svg></button>
+    <div class="info-top">
+      <div class="info-img" id="info-img"></div>
+      <div class="info-titles">
+        <h3 id="info-title"></h3>
+        <p id="info-sub"></p>
+        <button id="info-play" class="btn btn-play" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v17L20.500 12z"/></svg>Play</button>
+      </div>
+    </div>
+    <div class="info-body">
+      <div>
+        <p class="meta"><span class="match">100% Match</span><span id="info-year"></span><span id="info-run"></span><span class="hd">HD</span></p>
+        <p class="premiere" id="info-detail"></p>
+        <p id="info-syn"></p>
+      </div>
+      <div class="info-side">
+        <p><span>Cast:</span> <b id="info-cast"></b></p>
+        <p><span>Genres:</span> <b id="info-genres"></b></p>
+        <p><span>This special is:</span> <b id="info-moods"></b></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Video player -->
+<div id="player" class="overlay" aria-label="Player">
+  <video id="video" playsinline preload="auto"></video>
+  <div class="p-ui">
+    <button class="p-back" data-close type="button" aria-label="Back to home"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7" fill="none" stroke="#fff" stroke-width="2"/></svg></button>
+    <div class="p-bottom">
+      <div class="p-seek" id="seek"><div class="p-buf" id="buf"></div><div class="p-fill" id="fill"></div></div>
+      <div class="p-row">
+        <button id="pp" type="button" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path id="pp-icon" d="M6 4h4v16H6zM14 4h4v16h-4z" fill="#fff"/></svg></button>
+        <button id="mute" type="button" aria-label="Mute"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z" fill="#fff"/><path id="mute-wave" d="M16 8.500a5 5 0 0 1 0 7M18.500 6a8.500 8.500 0 0 1 0 12" fill="none" stroke="#fff" stroke-width="1.800"/></svg></button>
+        <span class="p-time" id="ptime">0:00 / 0:00</span>
+        <span class="p-title" id="ptitle"></span>
+        <button id="fs" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="#fff" stroke-width="2"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Photo gallery -->
+<div id="gallery" class="overlay" aria-label="Gallery">
+  <img id="g-img" alt="">
+  <button class="p-back" data-close type="button" aria-label="Back to home"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7" fill="none" stroke="#fff" stroke-width="2"/></svg></button>
+  <button class="g-nav g-prev" id="g-prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" fill="none" stroke="#fff" stroke-width="2"/></svg></button>
+  <button class="g-nav g-next" id="g-next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24"><path d="M9 4l8 8-8 8" fill="none" stroke="#fff" stroke-width="2"/></svg></button>
+  <div class="g-cap"><span id="g-title"></span><span id="g-count"></span></div>
+</div>
+
+<script src="catalog.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
