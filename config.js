@@ -3,12 +3,16 @@
    • Swap the hero photo:    change hero.image below (three posters are in media/heroes/)
    • Swap the profile photo: replace media/profile.jpg (square, 400×400)
    • Change any wording below, save, refresh.
+   • "Top 10 Reasons I Love You" (photos + lines) and the film strip behind "Who's watching?":
+     edit TOP10 / STRIP in work/catalog.py, then run  .venv/bin/python work/catalog.py
    The closing "Happy Birthday, Arushi" card lives inside the film itself:
    edit WORDS at the top of work/film2.py and re-run ./build-film.sh
    ───────────────────────────────────────────────────────────── */
 window.PARTY = {
   initials: "AJM",
   profile: { name: "Arushi", photo: "media/profile.jpg" },
+  // Second tile on "Who's watching?" is just for show: clicking it pops up this line.
+  otherProfile: { name: "Jatin", locked: "Nice try. Tonight is only streaming on Arushi's profile." },
 
   hero: {
     image: "media/heroes/childhood.jpg", position: "70% 40%", mobilePosition: "74% 30%",

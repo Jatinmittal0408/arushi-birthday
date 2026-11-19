@@ -64,7 +64,113 @@ window.CATALOG_ROWS = [
   ]
  },
  {
-  "title": "The Many Moods of Arushi",
+  "title": "Top 10 Reasons I Love You",
+  "kind": "top10",
+  "items": [
+   {
+    "id": "top1",
+    "type": "reason",
+    "n": 1,
+    "title": "The Hand I Hold",
+    "badge": "Since day one",
+    "line": "You reached across the table. I have been holding on ever since.",
+    "cover": "media/covers/top1.jpg",
+    "photo": 27
+   },
+   {
+    "id": "top2",
+    "type": "reason",
+    "n": 2,
+    "title": "The Saree Incident",
+    "badge": null,
+    "line": "You walked in wearing this and I forgot my own name.",
+    "cover": "media/covers/top2.jpg",
+    "photo": 28
+   },
+   {
+    "id": "top3",
+    "type": "reason",
+    "n": 3,
+    "title": "Salon Suspicion",
+    "badge": "Fan favourite",
+    "line": "Nobody has ever trusted a hairdresser less.",
+    "cover": "media/covers/top3.jpg",
+    "photo": 120
+   },
+   {
+    "id": "top4",
+    "type": "reason",
+    "n": 4,
+    "title": "The Full-Teeth Grin",
+    "badge": "New daily",
+    "line": "The grin that arrives before the joke even lands.",
+    "cover": "media/covers/top4.jpg",
+    "photo": 88
+   },
+   {
+    "id": "top5",
+    "type": "reason",
+    "n": 5,
+    "title": "Bonfire You",
+    "badge": null,
+    "line": "Cold night, big fire, and you were still the warm part.",
+    "cover": "media/covers/top5.jpg",
+    "photo": 35
+   },
+   {
+    "id": "top6",
+    "type": "reason",
+    "n": 6,
+    "title": "Dandiya Menace",
+    "badge": null,
+    "line": "Two sticks, no mercy, best night.",
+    "cover": "media/covers/top6.jpg",
+    "photo": 124
+   },
+   {
+    "id": "top7",
+    "type": "reason",
+    "n": 7,
+    "title": "Officer on Duty",
+    "badge": null,
+    "line": "You salute the mountains. I just follow orders.",
+    "cover": "media/covers/top7.jpg",
+    "photo": 58
+   },
+   {
+    "id": "top8",
+    "type": "reason",
+    "n": 8,
+    "title": "Certified Squishable",
+    "badge": "Renewed forever",
+    "line": "You let me do this to your face. That is commitment.",
+    "cover": "media/covers/top8.jpg",
+    "photo": 31
+   },
+   {
+    "id": "top9",
+    "type": "reason",
+    "n": 9,
+    "title": "The Video-Call Face",
+    "badge": null,
+    "line": "Even at bad Wi-Fi quality, the best thing on my screen.",
+    "cover": "media/covers/top9.jpg",
+    "photo": 142
+   },
+   {
+    "id": "top10",
+    "type": "reason",
+    "n": 10,
+    "title": "Scarf Season",
+    "badge": "Limited series",
+    "line": "Bundled up, phone in hand, silently judging the menu.",
+    "cover": "media/covers/top10.jpg",
+    "photo": 110
+   }
+  ]
+ },
+ {
+  "title": "Because You Said \"I'm Fine\"",
   "items": [
    {
     "id": "office",
@@ -85,7 +191,8 @@ window.CATALOG_ROWS = [
      98,
      107,
      48
-    ]
+    ],
+    "badge": "New episodes"
    },
    {
     "id": "pouts",
@@ -131,7 +238,7 @@ window.CATALOG_ROWS = [
   ]
  },
  {
-  "title": "The Two of Us",
+  "title": "Only on AJM: The Two of Us",
   "items": [
    {
     "id": "selfies",
@@ -215,10 +322,11 @@ window.CATALOG_ROWS = [
      45
     ]
    }
-  ]
+  ],
+  "kind": "tall"
  },
  {
-  "title": "Celebrations",
+  "title": "Occasions We Dressed Up For",
   "items": [
    {
     "id": "lastbirthday",
@@ -233,7 +341,8 @@ window.CATALOG_ROWS = [
      12,
      14,
      13
-    ]
+    ],
+    "badge": "Anniversary edition"
    },
    {
     "id": "garba",
@@ -250,7 +359,8 @@ window.CATALOG_ROWS = [
      128,
      80,
      79
-    ]
+    ],
+    "badge": "Recently added"
    },
    {
     "id": "datenight",
@@ -289,7 +399,7 @@ window.CATALOG_ROWS = [
   ]
  },
  {
-  "title": "Mountain Diaries",
+  "title": "Escape to the Hills",
   "items": [
    {
     "id": "flagpoint",
@@ -342,7 +452,7 @@ window.CATALOG_ROWS = [
   ]
  },
  {
-  "title": "Guitar Sessions",
+  "title": "Live & Unplugged",
   "items": [
    {
     "id": "guitar",
@@ -382,7 +492,8 @@ window.CATALOG_ROWS = [
     "title": "The Long Take",
     "tag": "Music",
     "cover": "media/covers/longtake.jpg",
-    "src": "media/video/longtake.mp4"
+    "src": "media/video/longtake.mp4",
+    "badge": "Director's cut"
    },
    {
     "id": "leanonme",
@@ -395,7 +506,7 @@ window.CATALOG_ROWS = [
   ]
  },
  {
-  "title": "Caught on Camera",
+  "title": "Bloopers & Behind the Scenes",
   "items": [
    {
     "id": "carpool",
@@ -403,7 +514,8 @@ window.CATALOG_ROWS = [
     "title": "Carpool Concert",
     "tag": "Clip",
     "cover": "media/covers/carpool.jpg",
-    "src": "media/video/carpool.mp4"
+    "src": "media/video/carpool.mp4",
+    "badge": "Most rewatched"
    },
    {
     "id": "greenroom",

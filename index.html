@@ -26,15 +26,37 @@
 
 <!-- 2 · Who's watching? -->
 <section id="profiles" class="stage" aria-label="Choose profile">
-  <h1>Who's watching?</h1>
-  <ul>
-    <li>
-      <button id="profile-btn" type="button">
-        <span class="avatar"><img id="profile-img" alt=""></span>
-        <span class="pname" id="profile-name"></span>
-      </button>
-    </li>
-  </ul>
+  <div class="pf-strip" aria-hidden="true"></div>
+  <div class="pf-shade" aria-hidden="true"></div>
+  <span class="wordmark pf-logo">NETFLIX</span>
+  <div class="pf-main">
+    <h1>Who's watching?</h1>
+    <ul>
+      <li>
+        <button id="profile-btn" class="pf-tile" type="button">
+          <span class="avatar"><img id="profile-img" alt=""></span>
+          <span class="pname" id="profile-name"></span>
+        </button>
+      </li>
+      <li>
+        <button class="pf-tile pf-locked" type="button">
+          <span class="avatar smiley"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="20" cy="33" r="5.500" fill="#fff"/><circle cx="80" cy="33" r="5.500" fill="#fff"/><path d="M42 57q22 9 44-3" fill="none" stroke="#fff" stroke-width="4.500" stroke-linecap="round"/></svg></span>
+          <span class="pname" id="profile-name-2"></span>
+        </button>
+      </li>
+      <li>
+        <button class="pf-tile pf-locked" type="button">
+          <span class="avatar add"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 39v22M39 50h22" stroke="#fff" stroke-width="2.500"/></svg></span>
+          <span class="pname">Add Profile</span>
+        </button>
+      </li>
+    </ul>
+    <span class="pf-manage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19zM14 7l3 3" fill="none" stroke="currentColor" stroke-width="1.700"/></svg>Manage Profiles</span>
+  </div>
+  <div class="pf-title" aria-hidden="true">
+    <b id="pf-title"></b><i id="pf-sub"></i><span id="pf-detail"></span>
+  </div>
+  <div class="pf-toast" id="pf-toast" role="status"></div>
 </section>
 
 <!-- 3 · Browse -->

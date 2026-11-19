@@ -4,7 +4,7 @@
   const show = (id) => { stages.forEach((s) => $("#" + s).classList.toggle("active", s === id)); document.body.dataset.stage = id; };
   const photo = (n) => `media/photos/${String(n).padStart(2, "0")}.jpg`;
   const items = { film: P.film };
-  P.rows.forEach((r) => r.items.forEach((it, i) => { if (it.id === "film") r.items[i] = P.film; else items[it.id] = it; }));
+  P.rows.forEach((r) => r.items.forEach((it, i) => { if (it.id === "film") r.items[i] = P.film; else items[it.id] = it; if (r.kind === "top10") it.row = r; }));
 
   /* ── AJM ident: a pre-rendered 1080p film (media/intro.mp4) with its own synced sound ── */
   const identVideo = $("#ident-video");
@@ -31,6 +31,12 @@
   /* ── populate ── */
   $("#profile-img").src = $("#mini-avatar").src = P.profile.photo;
   $("#profile-name").textContent = P.profile.name;
+  $("#profile-name-2").textContent = (P.otherProfile || {}).name || "Guest";
+  $("#pf-title").textContent = P.hero.title; $("#pf-sub").textContent = P.hero.subtitle; $("#pf-detail").textContent = P.hero.detail;
+  document.querySelectorAll(".pf-locked").forEach((b) => (b.onclick = () => {
+    const t = $("#pf-toast"); t.textContent = (P.otherProfile || {}).locked || ""; t.classList.remove("on"); b.classList.remove("shake"); void b.offsetWidth;
+    b.classList.add("shake"); t.classList.add("on"); clearTimeout(t.timer); t.timer = setTimeout(() => t.classList.remove("on"), 2600);
+  }));
   // ?hero=garba (or any name in config.js → hero.alternates) previews another poster without editing anything
   const alt = new URLSearchParams(location.search).get("hero");
   const heroPick = (alt && P.hero.alternates && P.hero.alternates[alt]) || P.hero;
@@ -45,13 +51,25 @@
   $("#info-cast").textContent = P.film.cast; $("#info-genres").textContent = P.film.genres; $("#info-moods").textContent = P.film.moods;
 
   const ico = { play: '<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="#000"/></svg>', plus: '<svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke="#fff" stroke-width="2"/></svg>', like: '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.500-7-10a4 4 0 0 1 7-2.500A4 4 0 0 1 19 10c0 5.500-7 10-7 10z" fill="none" stroke="#fff" stroke-width="1.8"/></svg>' };
-  $("#rows").innerHTML = P.rows.map((r) => `<section class="row"><h3>${r.title}</h3><div class="row-track">${r.items.map((it) => `
+  const card = (it) => `
       <button class="card" type="button" data-id="${it.id}" aria-label="${it.title}">
         <span class="card-art" style="background-image:url('${it.cover}')"></span>
-        <span class="card-mark">${P.initials}</span>${it.bakedTitle ? "" : `<span class="card-title">${it.title}</span>`}
+        <span class="card-mark">${P.initials}</span>${it.bakedTitle ? "" : `<span class="card-title">${it.title}</span>`}${it.badge ? `<span class="card-badge">${it.badge}</span>` : ""}
         <span class="card-info"><span class="ci-btns"><span class="ci-btn play">${ico.play}</span><span class="ci-btn">${ico.plus}</span><span class="ci-btn">${ico.like}</span></span>
           <span class="ci-meta"><span class="match">100% Match</span><span>${it.tag || it.runtime || ""}</span><span class="hd">HD</span></span></span>
-      </button>`).join("")}</div></section>`).join("");
+      </button>`;
+  // Top 10 row: big outlined rank number tucked behind a portrait poster
+  const rank = (it) => `
+      <button class="card t10" type="button" data-id="${it.id}" aria-label="Number ${it.n}: ${it.title}">
+        <svg class="t10-num" viewBox="0 0 100 150" aria-hidden="true"><text x="3" y="147" textLength="${it.n > 9 ? 108 : 92}" lengthAdjust="spacingAndGlyphs">${it.n}</text></svg>
+        <span class="t10-poster"><span class="card-art" style="background-image:url('${it.cover}')"></span>
+          <span class="card-mark">${P.initials}</span><span class="t10-title">${it.title}</span>${it.badge ? `<span class="t10-badge">${it.badge}</span>` : ""}</span>
+      </button>`;
+  const chev = (d) => `<button class="row-nav row-${d}" type="button" aria-label="${d === "next" ? "More" : "Back"}"><svg viewBox="0 0 24 24"><path d="${d === "next" ? "M9 4l8 8-8 8" : "M15 4l-8 8 8 8"}" fill="none" stroke="#fff" stroke-width="2.200"/></svg></button>`;
+  $("#rows").innerHTML = P.rows.map((r) => r.kind === "top10"
+    ? `<section class="row top10"><h3>${r.title}</h3><div class="row-wrap"><div class="row-track">${r.items.map(rank).join("")}</div>${chev("prev")}${chev("next")}</div></section>`
+    : `<section class="row ${r.kind || ""}"><h3>${r.title}</h3><div class="row-track">${r.items.map(card).join("")}</div></section>`).join("");
+  document.querySelectorAll(".row-nav").forEach((b) => (b.onclick = () => { const t = b.parentElement.querySelector(".row-track"); t.scrollBy({ left: (b.classList.contains("row-next") ? 1 : -1) * t.clientWidth * 0.8, behavior: "smooth" }); }));
 
   /* ── overlays: player, gallery, info ── */
   const video = $("#video"), player = $("#player"), gallery = $("#gallery"), info = $("#info");
@@ -97,12 +115,14 @@
   }
   function showPhoto() {
     const img = $("#g-img"); img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
+    if (gal.lines) $("#g-title").textContent = gal.lines[gi];
     img.src = photo(gal.photos[gi]); $("#g-count").textContent = `${gi + 1} / ${gal.photos.length}`;
     [1, -1].forEach((d) => { new Image().src = photo(gal.photos[(gi + d + gal.photos.length) % gal.photos.length]); });
   }
   function step(d) { gi = (gi + d + gal.photos.length) % gal.photos.length; showPhoto(); }
   function openItem(it) {
-    if (it.type === "gallery") { gal = it; gi = 0; $("#g-title").textContent = it.title; openOverlay(gallery); showPhoto(); }
+    if (it.type === "reason") { const r = it.row; gal = r.gal || (r.gal = { photos: r.items.map((x) => x.photo), lines: r.items.map((x) => `#${x.n}  ${x.line}`) }); gi = it.n - 1; openOverlay(gallery); showPhoto(); }
+    else if (it.type === "gallery") { gal = it; gi = 0; $("#g-title").textContent = it.title; openOverlay(gallery); showPhoto(); }
     else play(it);
   }
   const fmt = (s) => { s = Math.max(0, Math.floor(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
